@@ -44,23 +44,33 @@
 
                 let location = document.getElementById("location").value;
                 document.getElementById("city").innerText = location;
-                document.getElementById("location").value = "";
+                document.getElementById("location").value = '';
 
-                document.getElementById("temperature");
-                document.getElementById("weather");
+                // document.getElementById("temperature");
+                // document.getElementById("weather");
 
 
                 
                 fetch(`http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=d73221bf8edba3abc9493b5333d71691`)
                 .then(res => res.json())
-                .then(data => displayTemp(data))
+                .then(data => 
+                {   
+                    console.log(data);
+                    const temperature = (data.main.temp-273.15).toFixed(2);
+                    const weatherDescription = data.weather[0].description;
+                    
+                    document.getElementById("temperature").innerText = temperature;
+                    document.getElementById("weather").innerText = weatherDescription;
+
+
+
+                    }
+                   
+                    
+                )
                 .catch(error => alert('Wrong City'))
 
-                function displayTemp(tempData){
-                    const temperature = tempData.map(temper => temper.temp)
-                    console.log(temperature)
-                }
-
+                
             })
 
 
